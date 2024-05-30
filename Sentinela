@@ -1,0 +1,52 @@
+package br.com.fiap.main;
+
+import br.com.fiap.bean.Sensor;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Sentinela {
+    public static void main(String[] args) {
+        // Criação de uma lista de sensores
+        List<Sensor> sensores = new ArrayList<>();
+
+        // Coleta de dados do usuário
+        for (int i = 0; i < 3; i++) {
+            int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o ID do sensor:"));
+            String nome = JOptionPane.showInputDialog("Digite o nome do sensor:");
+            double latitude = Double.parseDouble(JOptionPane.showInputDialog("Digite a latitude do sensor:"));
+            double longitude = Double.parseDouble(JOptionPane.showInputDialog("Digite a longitude do sensor:"));
+            double valor = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor do sensor:"));
+
+            // Adicionando sensor à lista
+            sensores.add(new Sensor(id, nome, latitude, longitude, valor));
+        }
+
+        // Exibindo os sensores
+        StringBuilder resultado = new StringBuilder();
+        for (Sensor sensor : sensores) {
+            resultado.append(sensor.toString()).append("\n");
+        }
+
+        JOptionPane.showMessageDialog(null, resultado.toString());
+
+        // Operações com sensores
+        Sensor sensor1 = sensores.get(0);
+        Sensor sensor2 = sensores.get(1);
+
+        // Exibir distância entre dois sensores
+        double distancia = sensor1.calcularDistancia(sensor2);
+        JOptionPane.showMessageDialog(null, "Distância entre o Sensor 1 e o Sensor 2: " + distancia + " km");
+
+        // Verificar se o valor do sensor 1 está acima de um limite
+        double limite = Double.parseDouble(JOptionPane.showInputDialog("Digite o limite de valor para verificação:"));
+        boolean acimaDoLimite = sensor1.valorAcimaDe(limite);
+        JOptionPane.showMessageDialog(null, "O valor do Sensor 1 está acima do limite? " + acimaDoLimite);
+
+        // Atualizar valor do sensor 1
+        String novoValor = JOptionPane.showInputDialog("Digite o novo valor para o Sensor 1:");
+        sensor1.atualizarValor(novoValor);
+        JOptionPane.showMessageDialog(null, "Novo valor do Sensor 1: " + sensor1.getValor());
+    }
+}
